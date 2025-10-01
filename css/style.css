@@ -1,3 +1,11 @@
+@import url("./bootstrap-grid.css");
+@import url("./bootstrap-reboot.css");
+@import url("./bootstrap.css");
+
+@import url("./tether-theme-arrows-dark.css");
+@import url("./tether-theme-arrows.css");
+@import url("./tether-theme-basic.css");
+
 body {
 	font-size: 20px;
 	font-family: Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -6,16 +14,22 @@ body {
 	/*-webkit-text-size-adjust: 100%;*/
 	-moz-osx-font-smoothing: grayscale;
 	/*-webkit-font-smoothing: antialiased;*/
-	input {
-		font-size: 20px;
-		height: 40px;
-		width: 200px;
-	}
-	select {
-		font-size: 20px;
-		height: 40px;
-		width: 200px;
-	}
+}
+
+input {
+	font-size: 20px;
+	height: 40px;
+	width: 300px;
+	/* width: calc(100% - 150px);
+	box-sizing: border-box;
+	margin-left: 20px; */
+}
+
+select {
+	font-size: 20px;
+	height: 40px;
+	width: 300px;
+	box-sizing: border-box;
 }
 
 a {
@@ -589,3 +603,5 @@ tr:nth-child(even) {
 		}
 	}
 }
+
+@import url("./loginstyle.css");
