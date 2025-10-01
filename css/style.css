@@ -214,7 +214,7 @@ td {
 	overflow: hidden;
 	text-overflow: ellipsis;
 
-	text-align: right;
+	text-align: start;
 	padding-left: 10px;
 	padding-right: 10px;
 }
