@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Common Layout</title>
+		<link rel="stylesheet" href="../css/style.css" />
+		<style>
+			/* loader style */
+			.loader {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(255, 255, 255, 0.7);
+				z-index: 9999;
+			}
+			.loader .swing div {
+				width: 10px;
+				height: 10px;
+				background: #333;
+				margin: 2px;
+				display: inline-block;
+				animation: swing 1s infinite;
+			}
+			@keyframes swing {
+				0%,
+				100% {
+					transform: translateY(0);
+				}
+				50% {
+					transform: translateY(-10px);
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="nav-wrap">
+			<!-- 側邊選單 -->
+			<nav class="main-nav" role="navigation" id="sidebar">
+				<div id="sidenav">
+					<div class="wrapper">
+						<div class="logo">
+							<a
+								class="image-link"
+								style="padding-top: 5px"
+								onclick="changeRightPage('frontPage')"
+							>
+								<img
+									src="../img/logo.png"
+									style="padding: 5px"
+									width="80%"
+									title="回首頁"
+								/>
+							</a>
+						</div>
+						<div class="menu menu-wrap">
+							<ul>
+								<li>
+									<p class="func-Menu jq-clickBtn">
+										前台功能
+									</p>
+									<ul class="func-List jq-dropdown">
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('queryDuplicatePolicyInfo')"
+												>保單重複資料查詢</a
+											>
+										</li>
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('queryWhiteList.html')"
+												>白名單查詢</a
+											>
+										</li>
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('queryIneffStaff')"
+												>保經代停招業務查詢</a
+											>
+										</li>
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('maintainIneffStaff.html')"
+												>保經代停招業務維護</a
+											>
+										</li>
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('cancelCustomerDataShare')"
+												>取消客戶資料共享</a
+											>
+										</li>
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('salespersonLoginInformationMaintenance.html')"
+												>業務員登錄資料維護</a
+											>
+										</li>
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('salespersonLoginInformationMaintenanceNonCompany.html')"
+												>(非本公司)業務員登錄資料維護</a
+											>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<p class="func-Menu system-clickBtn">
+										後台管理
+									</p>
+									<ul class="func-List system-dropdown">
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('noticeManage')"
+												>公告管理</a
+											>
+										</li>
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('quartzManage')"
+												>排程管理</a
+											>
+										</li>
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('batchView')"
+												>排程執行結果查詢</a
+											>
+										</li>
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('middleConf')"
+												>系統參數管理</a
+											>
+										</li>
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('cacheManage')"
+												>快取管理</a
+											>
+										</li>
+										<li>
+											<a href="/druid/login.html"
+												>Druid</a
+											>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<p class="func-Menu auth-clickBtn">
+										權限管理
+									</p>
+									<ul class="func-List auth-dropdown">
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('userManage')"
+												>使用者管理</a
+											>
+										</li>
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('userRoleManage')"
+												>使用者角色管理</a
+											>
+										</li>
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('roleManage')"
+												>角色管理</a
+											>
+										</li>
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('roleAuthManage')"
+												>角色權限管理</a
+											>
+										</li>
+										<li>
+											<a
+												href="#"
+												onclick="changeRightPage('authManage')"
+												>權限管理</a
+											>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<input type="hidden" id="userId" value="C12345" />
+			</nav>
+
+			<!-- 頁面上方資訊列 -->
+			<nav
+				id="page-bar"
+				style="
+					background: linear-gradient(to top right, #c5ab77, #846339);
+				"
+			>
+				<div class="clearfix">
+					<div class="bar-title">
+						<span>登入員編：</span>
+						<span id="displayUserId">12345</span>
+						&nbsp;
+						<form action="/logout" method="post">
+							<button type="submit" class="logout-button">
+								登出
+							</button>
+						</form>
+					</div>
+				</div>
+			</nav>
+
+			<!-- 右側頁面容器 -->
+			<nav id="page-right" style="top: 50px">
+				<!-- 動態內容區塊由 JS 填充 -->
+			</nav>
+
+			<!-- 分頁範例容器 -->
+			<div id="pagination-container">
+				<!-- JS 可以動態產生頁碼 -->
+			</div>
+
+			<!-- Loader -->
+			<div
+				aria-busy="true"
+				aria-label="Loading"
+				role="progressbar"
+				class="loader"
+				id="loading"
+			>
+				<div class="swing">
+					<div class="swing-l"></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div class="swing-r"></div>
+				</div>
+				<div class="shadow">
+					<div class="shadow-l"></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div class="shadow-r"></div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			// 顯示 userId
+			const userId = document.getElementById("userId").value;
+			document.getElementById("displayUserId").innerText =
+				userId.startsWith("C") ? userId.substring(1) : userId;
+
+			// 頁面切換範例
+			// function changeRightPage(pageId) {
+			// 	const pageRight = document.getElementById("page-right");
+			// 	pageRight.innerHTML = `<p>目前切換到頁面：${pageId}</p>`;
+			// 	// 這裡可以再加載對應 HTML 或 JS
+			// }
+			function changeRightPage(pageFile) {
+				const pageRight = document.getElementById("page-right");
+
+				// 顯示 Loading
+				showLoader();
+
+				// 用 fetch 抓對應的 HTML 檔
+				fetch(pageFile)
+					.then((res) => res.text())
+					.then((html) => {
+						pageRight.innerHTML = html; // 把讀到的 html 塞到右邊區塊
+					})
+					.catch((err) => {
+						pageRight.innerHTML = `<p style="color:red;">載入失敗：${err}</p>`;
+					})
+					.finally(() => {
+						hideLoader(); // 關閉 Loading
+					});
+			}
+
+			// Loader 控制範例
+			function showLoader() {
+				document.getElementById("loading").style.display = "block";
+			}
+			function hideLoader() {
+				document.getElementById("loading").style.display = "none";
+			}
+		</script>
+	</body>
+</html>

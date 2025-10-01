@@ -1,0 +1,240 @@
+<!-- salespersonLoginInformationMaintenance 靜態頁面 -->
+
+	<div id="salespersonLoginInformationMaintenance">
+		<p class="table-title">業務員登錄資料維護</p>
+	
+		<div class="table-wrap" style="height: 70vh">
+			<div>
+				<table>
+					<tr>
+						<td>
+							業務員代碼
+							R02009
+						</td>
+						<td>
+							姓名
+							<input
+								type="text"
+								id="staffLicenseNo"
+								placeholder="新增時必填欄位"
+								onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9.\/]/ig,'').toUpperCase()"
+							/>
+						</td>
+						<td>
+							身份證號
+							<input
+								type="text"
+								id="staffLicenseNo"
+								placeholder="新增時必填欄位"
+								onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9.\/]/ig,'').toUpperCase()"
+							/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						</td>
+						<td>
+							出生日期
+							<input
+								type="date"
+							/>
+						</td>
+						<td>
+							登錄證號
+							<input
+								type="text"
+								id="staffLicenseNo"
+								placeholder="新增時必填欄位"
+								onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9.\/]/ig,'').toUpperCase()"
+							/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							外部人員
+						</td>
+						<td>
+							子公司代碼
+							<input
+								type="text"
+								placeholder="新增時必填欄位"
+								onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9.\/]/ig,'').toUpperCase()"
+							/>
+						</td>
+						<td>
+							原單位代碼
+							<input
+								type="text"
+								placeholder="新增時必填欄位"
+								onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9.\/]/ig,'').toUpperCase()"
+							/>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							銀行代碼
+							<input
+								type="text"
+								placeholder="新增時必填欄位"
+								onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9.\/]/ig,'').toUpperCase()"
+							/>
+						</td>
+						<td>
+							帳號
+							<input
+								type="text"
+								placeholder="新增時必填欄位"
+								onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9.\/]/ig,'').toUpperCase()"
+							/>
+						</td>
+						<td>
+							來源
+							<select id="relationshipId">
+								<option value="">==請選擇==</option>
+								<option value="1">金控</option>
+								<option value="2">其他</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							電話
+							<input
+								type="text"
+								placeholder="新增時必填欄位"
+								onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9.\/]/ig,'').toUpperCase()"
+							/>
+						</td>
+							<td colspan="2">
+							EMAIL
+							<input
+								type="text"
+								style="width: 600px"
+								placeholder="新增時必填欄位"
+								onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9.\/]/ig,'').toUpperCase()"
+							/>
+						</td>
+					</tr>
+					<tr>
+						</td>
+							<td colspan="3">
+							戶籍地
+							<input
+								type="text"
+								style="width: 1035px"
+								placeholder="新增時必填欄位"
+								onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9.\/]/ig,'').toUpperCase()"
+							/>
+						</td>
+					</tr>
+					<tr>
+						</td>
+							<td colspan="3">
+							通訊處
+							<input
+								type="text"
+								style="width: 1035px"
+								placeholder="新增時必填欄位"
+								onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9.\/]/ig,'').toUpperCase()"
+							/>
+						</td>
+					</tr>
+					<tr>
+						</td>
+							<td colspan="3">
+							註記
+							<select id="relationshipId">
+								<option value="">==請選擇==</option>
+								<option value="1">停用</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</div>
+		
+			<div style="padding: 12px">
+				<!-- << < [1] [2]> >> -->
+			</div>
+			<!-- 資料表格 -->
+			<div class="table-wrap" style="height: 60vh">
+				<table id="ineffStaffTable" border="1" style="width: 100%">
+					<thead>
+						<tr>
+							<th>序</th>
+							<th class="sortable">經手人代號</th>
+							<th class="sortable">業務員登錄證號</th>
+							<th class="sortable">停招起日</th>
+							<th class="sortable">停招迄日</th>
+							<th class="sortable">備註</th>
+							<th>建立人員</th>
+							<th>修改人員</th>
+							<th>修改時間</th>
+						</tr>
+					</thead>
+					<tbody id="ineffStaffTableBody">
+						<tr>
+							<td colspan="9" style="color: red;text-align: center;">查無資料</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	
+	</div>
+
+	<script>
+		// 範例按鈕事件
+		document
+			.getElementById("queryButton")
+			.addEventListener("click", function () {
+				alert("查詢功能尚未實作");
+			});
+		document
+			.getElementById("clearButton")
+			.addEventListener("click", function () {
+				document.getElementById("operatorCode").value = "";
+				document.getElementById("staffLicenseNo").value = "";
+				document.getElementById("memo").value = "";
+				document.getElementById("startDate").value = "";
+				document.getElementById("endDate").value = "";
+			});
+		document
+			.getElementById("insertButton")
+			.addEventListener("click", function () {
+				alert("新增功能尚未實作");
+			});
+
+		// Loader 控制範例
+		function showLoader() {
+			document.getElementById("loading").style.display = "block";
+		}
+		function hideLoader() {
+			document.getElementById("loading").style.display = "none";
+		}
+
+		// 這裡可以寫一個 JS function 動態填充表格資料
+		function fillIneffStaffTable(data) {
+			const tbody = document.getElementById("ineffStaffTableBody");
+			tbody.innerHTML = "";
+			if (data.length === 0) {
+				tbody.innerHTML = `<tr><td colspan="9" style="color:red;">查無資料</td></tr>`;
+				return;
+			}
+			data.forEach((item, index) => {
+				const tr = document.createElement("tr");
+				tr.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${item.operatorCode || ""}</td>
+                <td>${item.staffLicenseNo || ""}</td>
+                <td>${item.startDate || ""}</td>
+                <td>${item.endDate || ""}</td>
+                <td>${item.memo || ""}</td>
+                <td>${item.insertedBy || ""}</td>
+                <td>${item.updateBy || ""}</td>
+                <td>${item.updateTime || ""}</td>
+            `;
+				tbody.appendChild(tr);
+			});
+		}
+	</script>
+</html>

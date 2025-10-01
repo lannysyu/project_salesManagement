@@ -1,0 +1,204 @@
+<!-- queryWhiteList 靜態頁面 -->
+<div id="queryWhiteListPage">
+	<p class="table-title">查詢白名單</p>
+
+	<!-- 查詢欄位 -->
+	<div>
+		<table>
+			<tr>
+				<td style="text-align: left; padding-left: 10px">
+					險種
+					<select id="insureType" style="width: 200px">
+						<!-- JS 可動態生成選項 -->
+					</select>
+				</td>
+				<td style="text-align: left; padding-left: 10px">
+					白名單類型
+					<select id="whitelistType" style="width: 100px">
+						<option value="1">手機</option>
+						<option value="2">信箱</option>
+						<option value="3">地址</option>
+					</select>
+				</td>
+				<td style="text-align: left; padding-left: 10px">
+					白名單資料
+					<input
+						type="text"
+						id="whitelistData"
+						style="width: 450px"
+						onkeyup="this.value=this.value.replace(/\s+/g,'')"
+					/>
+				</td>
+				<td style="text-align: left; padding-left: 10px">
+					白名單ID
+					<input
+						type="text"
+						id="idNo"
+						style="width: 200px"
+						onkeyup="this.value=this.value.replace(/\s+/g,'')"
+					/>
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align: left; padding-left: 10px">
+					關係
+					<select id="relationshipId" style="width: 200px">
+						<option value="">==請選擇==</option>
+						<!-- JS 可動態生成選項 -->
+					</select>
+				</td>
+				<td style="text-align: left; padding-left: 10px">
+					狀態碼
+					<select id="statusId" style="width: 150px">
+						<option value="">==請選擇==</option>
+						<option value="1">啟用</option>
+						<option value="2">停用</option>
+					</select>
+				</td>
+				<td style="text-align: left; padding-left: 10px">
+					備註
+					<input type="text" id="memo" style="width: 520px" />
+				</td>
+				<td>
+					<a
+						href="#"
+						style="font-size: 22px; font-weight: bold"
+						id="queryButton"
+						>查詢</a
+					>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- 分頁容器 -->
+	<div id="pagination-queryWhiteList">
+		<!-- JS 可以動態生成分頁 -->
+	</div>
+
+	<!-- 資料表格 -->
+	<div class="table-wrap" style="height: 60vh">
+		<table id="whiteListTable" border="1" style="width: 100%">
+			<thead>
+				<tr>
+					<th>序</th>
+					<th class="sortable">險種</th>
+					<th class="sortable">白名單類型</th>
+					<th class="sortable">白名單資料</th>
+					<th class="sortable">白名單ID</th>
+					<th class="sortable">關係</th>
+					<th class="sortable">狀態碼</th>
+					<th class="sortable">備註</th>
+					<th class="sortable">建立人員ID</th>
+					<th class="sortable">建立人員姓名</th>
+					<th class="sortable">建立時間</th>
+					<th class="sortable">修改時間</th>
+				</tr>
+			</thead>
+			<tbody id="whiteListTableBody">
+				<tr>
+					<td colspan="12" style="color: red">查無資料</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<!-- Loader -->
+	<!-- <div
+		aria-busy="true"
+		aria-label="Loading"
+		role="progressbar"
+		class="loader"
+		id="loading"
+	>
+		<div class="swing">
+			<div class="swing-l"></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div class="swing-r"></div>
+		</div>
+		<div class="shadow">
+			<div class="shadow-l"></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div class="shadow-r"></div>
+		</div>
+	</div> -->
+</div>
+
+<script>
+	// 範例按鈕事件
+	document
+		.getElementById("queryButton")
+		.addEventListener("click", function () {
+			alert("查詢功能尚未實作");
+		});
+
+	// Loader 控制範例
+	function showLoader() {
+		document.getElementById("loading").style.display = "block";
+	}
+	function hideLoader() {
+		document.getElementById("loading").style.display = "none";
+	}
+
+	// 填充險種、關係選項範例
+	const insuranceTypeList = [
+		{ name: "A", description: "險種A" },
+		{ name: "B", description: "險種B" },
+	];
+	const relationshipTypeMap = [
+		{ key: "1", value: "本人" },
+		{ key: "2", value: "配偶" },
+	];
+
+	const insureTypeSelect = document.getElementById("insureType");
+	insuranceTypeList.forEach((item) => {
+		const option = document.createElement("option");
+		option.value = item.name;
+		option.text = item.description;
+		insureTypeSelect.appendChild(option);
+	});
+
+	const relationshipSelect = document.getElementById("relationshipId");
+	relationshipTypeMap.forEach((item) => {
+		const option = document.createElement("option");
+		option.value = item.key;
+		option.text = item.value;
+		relationshipSelect.appendChild(option);
+	});
+
+	// 這裡可以寫一個 JS function 動態填充表格資料
+	function fillWhiteListTable(data) {
+		const tbody = document.getElementById("whiteListTableBody");
+		tbody.innerHTML = "";
+		if (data.length === 0) {
+			tbody.innerHTML = `<tr><td colspan="12" style="color:red;">查無資料</td></tr>`;
+			return;
+		}
+		data.forEach((item, index) => {
+			const tr = document.createElement("tr");
+			tr.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${item.insureTypeShow || ""}</td>
+                <td>${item.whitelistTypeShow || ""}</td>
+                <td>${item.whitelistData || ""}</td>
+                <td>${item.idNo || ""}</td>
+                <td>${item.relationshipIdShow || ""}</td>
+                <td>${item.statusIdShow || ""}</td>
+                <td>${item.memo || ""}</td>
+                <td>${item.userId || ""}</td>
+                <td>${item.userName || ""}</td>
+                <td>${item.insertTime || ""}</td>
+                <td>${item.updateTime || ""}</td>
+            `;
+			tbody.appendChild(tr);
+		});
+	}
+</script>

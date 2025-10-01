@@ -1,0 +1,242 @@
+<!-- maintainIneffStaff 靜態頁面 -->
+
+<div id="maintainIneffStaffPage">
+	<p class="table-title">維護停招員工</p>
+
+	<!-- 查詢欄位 -->
+	<div>
+		<table>
+			<tr>
+				<td style="text-align: middle; padding-left: 10px">
+					經手人代號
+					<input
+						type="text"
+						id="operatorCode"
+						style="width: 200px"
+						placeholder="新增時必填欄位"
+						onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9.\/]/ig,'').toUpperCase()"
+					/>
+				</td>
+				<td style="text-align: middle; padding-left: 10px">
+					業務員登錄證號
+					<input
+						type="text"
+						id="staffLicenseNo"
+						style="width: 200px"
+						placeholder="新增時必填欄位"
+						onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9.\/]/ig,'').toUpperCase()"
+					/>
+				</td>
+				<td style="text-align: middle; padding-left: 10px">
+					備註
+					<input type="text" id="memo" style="width: 200px" />
+				</td>
+			</tr>
+			<tr>
+				<td
+					style="
+						text-align: middle;
+						padding-left: 10px;
+						padding-right: 10px;
+					"
+				>
+					停招期間起日
+					<input
+						type="date"
+						id="startDate"
+						style="width: 200px"
+					/>
+				</td>
+				<td
+					style="
+						text-align: middle;
+						padding-left: 10px;
+						padding-right: 10px;
+					"
+				>
+					停招期間迄日
+					<input
+						type="date"
+						id="endDate"
+						style="width: 200px"
+					/>
+				</td>
+				<td style="text-align: middle; padding-left: 50px">
+					<a
+						href="#"
+						style="font-size: 22px; font-weight: bold"
+						id="queryButton"
+						>查詢</a
+					>
+					<a
+						href="#"
+						style="
+							font-size: 22px;
+							font-weight: bold;
+							margin-left: 20px;
+						"
+						id="clearButton"
+						>清除</a
+					>
+					<a
+						href="#"
+						style="
+							font-size: 22px;
+							font-weight: bold;
+							margin-left: 20px;
+						"
+						id="insertButton"
+						>新增</a
+					>
+					<a
+						href="#"
+						style="
+							font-size: 22px;
+							font-weight: bold;
+							margin-left: 20px;
+							display: none;
+						"
+						id="updateButton"
+						>修改</a
+					>
+					<a
+						href="#"
+						style="
+							font-size: 22px;
+							font-weight: bold;
+							margin-left: 20px;
+							display: none;
+						"
+						id="deleteButton"
+						>刪除</a
+					>
+					<a
+						href="#"
+						style="
+							font-size: 22px;
+							font-weight: bold;
+							margin-left: 20px;
+							display: none;
+						"
+						id="cancelButton"
+						>取消</a
+					>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<!-- 分頁容器 -->
+	<div id="pagination-maintainIneffStaff">
+		<!-- JS 可以動態生成分頁 -->
+	</div>
+
+	<!-- 資料表格 -->
+	<div class="table-wrap" style="height: 60vh">
+		<table id="ineffStaffTable" border="1" style="width: 100%">
+			<thead>
+				<tr>
+					<th>序</th>
+					<th class="sortable">經手人代號</th>
+					<th class="sortable">業務員登錄證號</th>
+					<th class="sortable">停招起日</th>
+					<th class="sortable">停招迄日</th>
+					<th class="sortable">備註</th>
+					<th>建立人員</th>
+					<th>修改人員</th>
+					<th>修改時間</th>
+				</tr>
+			</thead>
+			<tbody id="ineffStaffTableBody">
+				<tr>
+					<td colspan="9" style="color: red">查無資料</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<!-- Loader -->
+	<!-- <div
+		aria-busy="true"
+		aria-label="Loading"
+		role="progressbar"
+		class="loader"
+		id="loading"
+	>
+		<div class="swing">
+			<div class="swing-l"></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div class="swing-r"></div>
+		</div>
+		<div class="shadow">
+			<div class="shadow-l"></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div class="shadow-r"></div>
+		</div>
+	</div> -->
+</div>
+
+	<script>
+		// 範例按鈕事件
+		document
+			.getElementById("queryButton")
+			.addEventListener("click", function () {
+				alert("查詢功能尚未實作");
+			});
+		document
+			.getElementById("clearButton")
+			.addEventListener("click", function () {
+				document.getElementById("operatorCode").value = "";
+				document.getElementById("staffLicenseNo").value = "";
+				document.getElementById("memo").value = "";
+				document.getElementById("startDate").value = "";
+				document.getElementById("endDate").value = "";
+			});
+		document
+			.getElementById("insertButton")
+			.addEventListener("click", function () {
+				alert("新增功能尚未實作");
+			});
+
+		// Loader 控制範例
+		function showLoader() {
+			document.getElementById("loading").style.display = "block";
+		}
+		function hideLoader() {
+			document.getElementById("loading").style.display = "none";
+		}
+
+		// 這裡可以寫一個 JS function 動態填充表格資料
+		function fillIneffStaffTable(data) {
+			const tbody = document.getElementById("ineffStaffTableBody");
+			tbody.innerHTML = "";
+			if (data.length === 0) {
+				tbody.innerHTML = `<tr><td colspan="9" style="color:red;">查無資料</td></tr>`;
+				return;
+			}
+			data.forEach((item, index) => {
+				const tr = document.createElement("tr");
+				tr.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${item.operatorCode || ""}</td>
+                <td>${item.staffLicenseNo || ""}</td>
+                <td>${item.startDate || ""}</td>
+                <td>${item.endDate || ""}</td>
+                <td>${item.memo || ""}</td>
+                <td>${item.insertedBy || ""}</td>
+                <td>${item.updateBy || ""}</td>
+                <td>${item.updateTime || ""}</td>
+            `;
+				tbody.appendChild(tr);
+			});
+		}
+	</script>
+</html>
