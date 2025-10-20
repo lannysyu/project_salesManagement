@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="page-right">
+	<div th:object="${ineffStaffVO}">
+		<p class="table-title" th:text="${session.userAuths['maintainIneffStaff']}"></p>
+		
+		<div>
+			<table>
+			  	<tr>
+					<td style="text-align: middle; padding-left: 10px;">經手人代號 <input type="text" th:field="*{operatorCode}" th:id="'operatorCode'"
+						style="width: 200px" placeholder="新增時必填欄位" onkeyup="this.value = this.value.replace(/[^w\w\.\/]/ig,'').toUpperCase()"/></td>
+					<td style="text-align: middle; padding-left: 10px;">業務員登錄證號 <input type="text" th:field="*{staffLicenseNo}" th:id="'staffLicenseNo'"
+						style="width: 200px" placeholder="新增時必填欄位" onkeyup="this.value = this.value.replace(/[^w\w\.\/]/ig,'').toUpperCase()"/></td>
+				  	<td style="text-align: middle; padding-left: 10px;">備註 <input type="text" th:field="*{memo}" th:id="'memo'"  style="width: 200px"/></td>
+			  	</tr>
+			  	<tr>
+			  		<td	style="text-align: middle; padding-left: 10px; padding-right: 10px;">停招期間起日 <input type="date" style="width: 200px" th:field="*{startDate}" />
+			  		<td	style="text-align: middle; padding-left: 10px; padding-right: 10px;">停招期間迄日 <input type="date" style="width: 200px" th:field="*{endDate}" />
+					</td>
+			  		<td style="text-align: middle; padding-left: 50px;">
+			  		    <a href="#" style="font-size: 22px;font-weight: bold;" th:id="'queryButton'" th:onclick="'maintainIneffStaffQuery()'">查詢</a>
+			  			<a href="#" style="font-size: 22px;font-weight: bold; margin-left: 20px;" th:id="'clearButton'" th:onclick="'clearMaintainIneffStaffConditions()'">清除</a>
+			  		    <a href="#" style="font-size: 22px;font-weight: bold; margin-left: 20px;" th:id="'insertButton'" th:onclick="'insertIneffStaff()'">新增</a>
+			  		    <a href="#" style="font-size: 22px;font-weight: bold; display: none;" th:id="'updateButton'" th:onclick="'updateIneffStaff()'">修改</a>
+			  		    <a href="#" style="font-size: 22px;font-weight: bold; margin-left: 20px; display: none;" th:id="'deleteButton'" th:onclick="'deleteIneffStaff()'">刪除</a>
+			  		    <a href="#" style="font-size: 22px;font-weight: bold; margin-left: 20px; display: none;" th:id="'cancelButton'" th:onclick="'clearMaintainIneffStaffConditions()'">取消</a>
+			  		</td>
+			  	</tr>
+			</table>
+		</div>
+	<div th:unless="${pageNumArray}">
+		<br/>
+		</div>
+		<div th:replace="~{common/common :: paginationFragment('changeMaintainIneffStaffPage')}"></div>
+		<div class="table-wrap" style="height:60vh;">
+			<table>
+				<thead>
+		        	<tr th:if="${ineffStaffList}">
+		                <th>序</th>
+	                    <th
+	                        th:onclick="'toggleSortAndQuery(this, \'OPERATOR_CODE\', maintainIneffStaffQuery)'"
+	                        class="sortable" data-field="OPERATOR_CODE">經手人代號 <span class="sort-icon">↓↑</span></th>
+	                    <th
+	                        th:onclick="'toggleSortAndQuery(this, \'STAFF_LICENSE_NO\', maintainIneffStaffQuery)'"
+	                        class="sortable" data-field="STAFF_LICENSE_NO">業務員登錄證號 <span class="sort-icon">↓↑</span></th>
+	                    <th
+	                        th:onclick="'toggleSortAndQuery(this, \'START_DATE\', maintainIneffStaffQuery)'"
+	                        class="sortable" data-field="START_DATE">停招起日 <span class="sort-icon">↓↑</span></th>
+	                    <th
+	                        th:onclick="'toggleSortAndQuery(this, \'END_DATE\', maintainIneffStaffQuery)'"
+	                        class="sortable" data-field="END_DATE">停招迄日 <span class="sort-icon">↓↑</span></th>
+	                    <th
+	                        th:onclick="'toggleSortAndQuery(this, \'MEMO\', maintainIneffStaffQuery)'"
+	                        class="sortable" data-field="MEMO">備註 <span class="sort-icon">↓↑</span></th>
+	                    <th
+	                        th:onclick="'toggleSortAndQuery(this, \'INSERTED_BY\', maintainIneffStaffQuery)'"
+	                        class="sortable" data-field="INSERTED_BY">建立人員 <span class="sort-icon">↓↑</span></th>
+	                    <th
+	                        th:onclick="'toggleSortAndQuery(this, \'UPDATED_BY\', maintainIneffStaffQuery)'"
+	                        class="sortable" data-field="UPDATE_BY">修改人員 <span class="sort-icon">↓↑</span></th>
+	                    <th
+	                        th:onclick="'toggleSortAndQuery(this, \'UPDATE_TIME\', maintainIneffStaffQuery)'"
+	                        class="sortable" data-field="UPDATE_TIME">修改時間 <span class="sort-icon">↓↑</span></th>
+                	</tr>
+				</thead>
+		      	<tbody>
+		      		<tr th:each="ineffStaff, row : ${ineffStaffList}">
+		      			<td>
+		      				<a href="#" th:onclick="fillIneffStaffQueryConditions([[${row.index}]])" th:text="${row.count+(changePageNum-1)*pageSize}"></a>
+		      			</td>
+						<td th:id="'operatorCode_'+ ${row.index}" th:text="${ineffStaff.operatorCodeShow}"></td>
+						<td th:id="'staffLicenseNo_'+ ${row.index}" th:text="${ineffStaff.staffLicenseNoShow}"></td>
+						<td th:id="'startDate_'+ ${row.index}" th:text="${ineffStaff.startDateShow}"></td>
+						<td th:id="'endDate_'+ ${row.index}" th:text="${ineffStaff.endDateShow}"></td>
+						<td th:id="'memo_'+ ${row.index}" th:text="${ineffStaff.memoShow}"></td>
+						<td th:text="${ineffStaff.insertedBy}"></td>
+						<td th:text="${ineffStaff.updateBy}"></td>
+						<td th:text="${ineffStaff.updateTime}"></td>
+			    	</tr>
+		        	<tr th:if="${ineffStaffList != null and ineffStaffList.size()==0}">
+		            	<td colspan="12"  style="color: red">查無資料</td>
+		        	</tr>
+		        	<tr th:if="${!#strings.isEmpty(errorMsg)}">
+		            	<td colspan="12" th:id="errorMsg" style="color: red;height:auto" th:text="${errorMsg}"></td>
+		        	</tr>
+		        	<tr>
+		        		<td th:attr="hidden=${true}" th:id="'queryOperatorCode'"></td>
+		        		<td th:attr="hidden=${true}" th:id="'queryStaffLicenseNo'"></td>
+		        		<td th:attr="hidden=${true}" th:id="'queryStartDate'"></td>
+		        		<td th:attr="hidden=${true}" th:id="'queryEndDate'"></td>
+		        		<td th:attr="hidden=${true}" th:id="'queryMemo'"></td>
+		        	</tr>
+      			</tbody>
+	  		</table>
+ 		</div>
+ 		<input type="hidden" th:value="${changePageNum}" name="changePageNum" />
+		<input type="hidden" th:value="${endPageNum}" name="endPageNum" />
+ 		<div aria-busy="true" aria-label="Loading" role="progressbar" class="loader" id='loading'>
+		  <div class="swing">
+		    <div class="swing-l"></div>
+		    <div></div>
+		    <div></div>
+		    <div></div>
+		    <div></div>
+		    <div></div>
+		    <div class="swing-r"></div>
+		  </div>
+		  <div class="shadow">
+		    <div class="shadow-l"></div>
+		    <div></div>
+		    <div></div>
+		    <div></div>
+		    <div></div>
+		    <div></div>
+		    <div class="shadow-r"></div>
+		  </div>
+		</div>
+	</div>
+</html>

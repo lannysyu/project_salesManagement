@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="page-right">
+<div th:object="${whiteListVo}">
+	<p class="table-title" th:text="${session.userAuths['queryWhiteList']}"></p>
+	<div>
+		<table>
+			<tr>
+				<td style="text-align: left; padding-left: 10px;">險種 <select
+					style="width: 200px" th:field="*{insureType}" data-form-field>
+						<option th:each="insuranceType:${insuranceTypeList}"
+							th:value="${insuranceType.name}"
+							th:text="${insuranceType.description}"></option>
+				</select>
+				</td>
+				<td style="text-align: left; padding-left: 10px;">白名單類型 <select
+					style="width: 100px" th:field="*{whitelistType}" data-form-field>
+						<option th:value="'1'" th:text="手機"></option>
+						<option th:value="'2'" th:text="信箱"></option>
+						<option th:value="'3'" th:text="地址"></option>
+				</select>
+				</td>
+				<td style="text-align: left; padding-left: 10px;">白名單資料 <input
+					type="text" style="width: 450px" th:field="*{whitelistData}" data-form-field
+					onkeyup="value=value.replace(/\s+/g, '')" /></td>
+				<td style="text-align: left; padding-left: 10px;">白名單ID <input
+					type="text" style="width: 200px" th:field="*{idNo}" data-form-field
+					onkeyup="value=value.replace(/\s+/g, '')" /></td>
+			</tr>
+			<tr>
+				<td style="text-align: left; padding-left: 10px;">關係 <select
+					style="width: 200px" th:field="*{relationshipId}" data-form-field>
+						<option th:value="''" th:text="'==請選擇=='"></option>
+						<option th:each="entry:${relationshipTypeMap}"
+							th:value="${entry.key}" th:text="${entry.value}"></option>
+				</select>
+				</td>
+				<td style="text-align: left; padding-left: 10px;">狀態碼 <select
+					style="width: 150px" th:field="*{statusId}" data-form-field>
+						<option th:value="''" th:text="'==請選擇=='"></option>
+						<option th:value="'1'" th:text="啟用"></option>
+						<option th:value="'2'" th:text="停用"></option>
+				</select>
+				</td>
+				<td style="text-align: left; padding-left: 10px;">備註 <input
+					type="text" style="width: 520px" th:field="*{memo}" data-form-field/></td>
+				<td><a href="#" style="font-size: 22px; font-weight: bold;"
+					th:onclick="'queryWhiteList()'">查詢</a></td>
+			</tr>
+		</table>
+	</div>
+	<div th:unless="${pageNumArray}">
+		<br />
+	</div>
+	<div th:replace="~{common/common :: paginationFragment('changeWhiteListPage')}"></div>
+	<div class="table-wrap" style="height:60vh;">
+		<table>
+			<thead>
+                <tr th:if="${whiteList}">
+                    <th>序</th>
+                    <th
+                        th:onclick="'toggleSortAndQuery(this, \'insureType\', queryWhiteList)'"
+                        class="sortable" data-field="insureType">險種 <span class="sort-icon">↓↑</span></th>
+                    <th
+                        th:onclick="'toggleSortAndQuery(this, \'whitelistType\', queryWhiteList)'"
+                        class="sortable" data-field="whitelistType">白名單<br>類型 <span class="sort-icon">↓↑</span></th>
+                    <th
+                        th:onclick="'toggleSortAndQuery(this, \'whitelistData\', queryWhiteList)'"
+                        class="sortable" data-field="whitelistData">白名單資料 <span class="sort-icon">↓↑</span></th>
+                    <th
+                        th:onclick="'toggleSortAndQuery(this, \'idNo\', queryWhiteList)'"
+                        class="sortable" data-field="idNo">白名單ID <span class="sort-icon">↓↑</span></th>
+                    <th
+                        th:onclick="'toggleSortAndQuery(this, \'relationshipId\', queryWhiteList)'"
+                        class="sortable" data-field="relationshipId">關係 <span class="sort-icon">↓↑</span></th>
+                    <th
+                        th:onclick="'toggleSortAndQuery(this, \'statusId\', queryWhiteList)'"
+                        class="sortable" data-field="statusId">狀態碼 <span class="sort-icon">↓↑</span></th>
+                    <th
+                        th:onclick="'toggleSortAndQuery(this, \'memo\', queryWhiteList)'"
+                        class="sortable" data-field="memo">備註 <span class="sort-icon">↓↑</span></th>
+                    <th
+                        th:onclick="'toggleSortAndQuery(this, \'userId\', queryWhiteList)'"
+                        class="sortable" data-field="userId">建立人員ID <span class="sort-icon">↓↑</span></th>
+                    <th
+                        th:onclick="'toggleSortAndQuery(this, \'userName\', queryWhiteList)'"
+                        class="sortable" data-field="userName">建立人員<br>姓名 <span class="sort-icon">↓↑</span></th>
+                    <th
+                        th:onclick="'toggleSortAndQuery(this, \'insertTime\', queryWhiteList)'"
+                        class="sortable" data-field="insertTime">建立時間 <span class="sort-icon">↓↑</span></th>
+                    <th
+                        th:onclick="'toggleSortAndQuery(this, \'updateTime\', queryWhiteList)'"
+                        class="sortable" data-field="updateTime">修改時間 <span class="sort-icon">↓↑</span></th>
+                </tr>
+			</thead>
+			<tbody>
+				<tr th:each="whiteListDetailVo, row : ${whiteList}">
+					<td th:text="${row.count+(changePageNum-1)*pageSize}"></td>
+					<td th:text="${whiteListDetailVo.insureTypeShow}"></td>
+					<td th:text="${whiteListDetailVo.whitelistTypeShow}"></td>
+					<td th:text="${whiteListDetailVo.whitelistData}"></td>
+					<td th:text="${whiteListDetailVo.idNo}"></td>
+					<td th:text="${whiteListDetailVo.relationshipIdShow}"></td>
+					<td th:text="${whiteListDetailVo.statusIdShow}"></td>
+					<td th:text="${whiteListDetailVo.memo}"></td>
+					<td th:text="${whiteListDetailVo.userId}"></td>
+					<td th:text="${whiteListDetailVo.userName}"></td>
+					<td th:text="${whiteListDetailVo.insertTime}"></td>
+					<td th:text="${whiteListDetailVo.updateTime}"></td>
+				</tr>
+				<tr th:if="${whiteList != null and whiteList.size()==0}">
+					<td colspan="12" style="color: red">查無資料</td>
+				</tr>
+				<tr th:if="${!#strings.isEmpty(errorMsg)}">
+					<td colspan="12" style="color: red; height: auto"
+						th:text="${errorMsg}" th:id="errorMsg"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<input type="hidden" th:value="${changePageNum}" name="changePageNum" />
+	<input type="hidden" th:value="${endPageNum}" name="endPageNum" />
+	<div aria-busy="true" aria-label="Loading" role="progressbar"
+		class="loader" id='loading'>
+		<div class="swing">
+			<div class="swing-l"></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div class="swing-r"></div>
+		</div>
+		<div class="shadow">
+			<div class="shadow-l"></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div class="shadow-r"></div>
+		</div>
+	</div>
+</div>
+</html>
